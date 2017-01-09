@@ -103,7 +103,7 @@ public final class TabelaPrecoUtil {
         }
     }
 
-    static public Collection makeUsuarioObjectsFromResultSet(final ResultSet rs)
+    static public Collection makeTabelaPrecoObjectsFromResultSet(final ResultSet rs)
             throws java.sql.SQLException {
         Collection result = new java.util.ArrayList();
         while (rs.next()) {
