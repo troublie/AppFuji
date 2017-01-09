@@ -11,6 +11,21 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1>Atualizar usuário por ID</h1>
+        <form method="POST" action="FrontControllerServlet?control=AtualizaUsuario">
+            ID:<br>
+            <input type="text" name="idAtualiza">
+            <br>
+            Nome:<br>
+            <input type="text" name="nomeAtualiza">
+            <br>
+            Sobrenome:<br>
+            <input type="text" name="sobrenomeAtualiza">
+            <br>
+            Email:<br>
+            <input type="text" name="emailAtualiza">
+            <br>
+            <button type="submit" value="Submit">Submit</button>
+        </form>
     </body>
 </html>

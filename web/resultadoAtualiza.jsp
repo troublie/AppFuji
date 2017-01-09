@@ -1,6 +1,6 @@
 <%-- 
-    Document   : resultadoRemove
-    Created on : Jan 9, 2017, 5:35:58 PM
+    Document   : resultadoAtualiza
+    Created on : Jan 9, 2017, 5:50:51 PM
     Author     : juliano.lopes
 --%>
 
@@ -12,13 +12,13 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Resultado da remoção</h1>
-        <% boolean res = (boolean) request.getAttribute("idRem"); %>
+        <h1>Resultado da atualização</h1>
+        <% boolean res = (boolean) request.getAttribute("res"); %>
         <% if (res) {%>
-        <p> Usuário removido com sucesso! </p>
+        <p> Usuário atualizado com sucesso! </p>
         <%}%>
-        <%if(!res){%>
-        <p> Erro ao remover usuário! </p>
+        <%if (!res) {%>
+        <p> Erro ao atualizar usuário! </p>
         <%}%>
     </body>
 </html>

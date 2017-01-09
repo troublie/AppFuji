@@ -24,9 +24,10 @@
         <table>
             <% for (Usuario u : usuarios) {%>
             <tr>
+                <td>ID: <%=u.getId()%> |</td>
                 <td><%=u.getUsuarioFirstName()%></td>
-                <td><%=u.getUsuarioLastName()%></td>
-                <td><%=u.getUsuarioEmail()%></td>
+                <td><%=u.getUsuarioLastName()%> |</td>
+                <td><%=u.getUsuarioEmail()%> |</td>
             </tr>
             <%}%>
         </table>

@@ -162,7 +162,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             sbUpdate.append(UsuarioConstantes.USUARIO_TABLE_NAME);
             sbUpdate.append(" SET ");
             sbUpdate.append(" usuariofirstname = ?, ");
-            sbUpdate.append(" usuariolastname = ? ");
+            sbUpdate.append(" usuariolastname = ?, ");
             sbUpdate.append(" usuarioemail = ? ");
             sbUpdate.append(" WHERE usuario_id = ?");
             stmtUpdate = conn.prepareStatement(sbUpdate.toString());
