@@ -21,8 +21,8 @@ public class UserListController extends AbstractController {
     public void execute() {
         try {
             List usuarios = new ArrayList<Usuario>();
-            usuarios.add(new Usuario(1, "Mack", "Junior"));
-            usuarios.add(new Usuario(2, "Mack", "Neto"));
+            usuarios.add(new Usuario(1, "Juliano", "Lopes", "juliano@gmail.com"));
+            usuarios.add(new Usuario(2, "João", "Pedro", "joao@gmail.com"));
             this.setReturnPage("/index.jsp");
             this.getRequest().setAttribute("usuarios", usuarios);
         } catch (Exception ex) {
