@@ -14,12 +14,13 @@ public class Usuario {
     private int id;
     private String usuarioFirstName;
     private String usuarioLastName;
-    private String email;
+    private String usuarioEmail;
 
     public Usuario(int id, String usuarioFirstName, String usuarioLastName, String usuarioEmail) {
         this.id = id;
         this.usuarioFirstName = usuarioFirstName;
         this.usuarioLastName = usuarioLastName;
+        this.usuarioEmail = usuarioEmail;
 
     }
 
@@ -47,12 +48,12 @@ public class Usuario {
         this.usuarioLastName = usuarioLastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsuarioEmail() {
+        return usuarioEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsuarioEmail(String email) {
+        this.usuarioEmail = email;
     }
 
 }

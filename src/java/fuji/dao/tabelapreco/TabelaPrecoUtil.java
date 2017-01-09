@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fuji.dao.usuario;
+package fuji.dao.tabelapreco;
 
-import fuji.entities.Usuario;
+import fuji.entities.TabelaPreco;
 import java.sql.*;
 import java.util.Collection;
 import javax.sql.*;
@@ -13,23 +13,22 @@ import fuji.dao.exception.DAORuntimeException;
 import org.apache.commons.lang.exception.*;
 import org.apache.commons.logging.*;
 
-
 /**
  *
  * @author juliano.lopes
  */
-public final class UsuarioUtil {
+public final class TabelaPrecoUtil {
 
-    static final private Log log = LogFactory.getLog(UsuarioUtil.class);
+    static final private Log log = LogFactory.getLog(TabelaPrecoUtil.class);
 
-    static public int getUniqueUsuarioId(final Connection conn)
+    static public int getUniqueTabelaPrecoId(final Connection conn)
             throws java.sql.SQLException {
         int id;
         Statement stmtSelect = null;
         ResultSet rs = null;
         StringBuilder sbSelect = new StringBuilder();
         sbSelect.append("SELECT currentvalue FROM SYS.SYSSEQUENCES WHERE SEQUENCENAME='");
-        sbSelect.append(UsuarioConstantes.USUARIO_ID_SEQUENCE_NAME.toUpperCase());
+        sbSelect.append(TabelaPrecoConstantes.TABELAPRECO_ID_SEQUENCE_NAME.toUpperCase());
         sbSelect.append("'");
         try {
             stmtSelect = conn.createStatement();
@@ -44,13 +43,13 @@ public final class UsuarioUtil {
             id = (int) aux;
             id++;
         } finally {
-            UsuarioUtil.closeStatement(stmtSelect);
-            UsuarioUtil.closeResultSet(rs);
+            TabelaPrecoUtil.closeStatement(stmtSelect);
+            TabelaPrecoUtil.closeResultSet(rs);
         }
         return id;
     }
 
-    private UsuarioUtil() {
+    private TabelaPrecoUtil() {
 // this constructor is intentionally private
     }
 
@@ -58,10 +57,10 @@ public final class UsuarioUtil {
         Connection conn = null;
         DataSource ds = null;
         try {
-            Class.forName(UsuarioConstantes.DRIVER).newInstance();
-            conn = DriverManager.getConnection(UsuarioConstantes.URL,
-                    UsuarioConstantes.USER,
-                    UsuarioConstantes.PASSWORD);
+            Class.forName(TabelaPrecoConstantes.DRIVER).newInstance();
+            conn = DriverManager.getConnection(TabelaPrecoConstantes.URL,
+                    TabelaPrecoConstantes.USER,
+                    TabelaPrecoConstantes.PASSWORD);
         } catch (ClassNotFoundException ex) {
             throw new DAORuntimeException(ex);
         } catch (InstantiationException e) {
@@ -109,10 +108,16 @@ public final class UsuarioUtil {
         Collection result = new java.util.ArrayList();
         while (rs.next()) {
             int id = rs.getInt("usuario_id");
-            String nome = rs.getString("usuarioFirstName");
-            String sobrenome = rs.getString("usuarioLastName");
-            String email = rs.getString("usuarioEmail");
-            Usuario u = new Usuario(id, nome, sobrenome, email);
+            String tabelaPrecoNome = rs.getString("tabelaPrecoNome");
+            String duhn = rs.getString("duhn");
+            String duhe = rs.getString("duhe");
+            String duhe2 = rs.getString("duhe2");
+            String ddu = rs.getString("ddu");
+            String fshn = rs.getString("fshn");
+            String fshe = rs.getString("fshe");
+            String fshe2 = rs.getString("fshe2");
+            String dfs = rs.getString("dfs");
+            TabelaPreco u = new TabelaPreco(id, tabelaPrecoNome, duhn, duhe, duhe2, ddu, fshn, fshe, fshe2, dfs);
             result.add(u);
         }
         return result;

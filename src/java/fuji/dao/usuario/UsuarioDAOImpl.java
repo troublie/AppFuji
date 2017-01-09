@@ -34,7 +34,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         PreparedStatement stmtSelect = null;
         try {
             StringBuilder sbSelect = new StringBuilder();
-            sbSelect.append("SELECT usuario_id, nome, sobrenome, email FROM ");
+            sbSelect.append("SELECT usuario_id, usuariofirstname, usuariolastname, usuarioemail FROM ");
             sbSelect.append(UsuarioConstantes.USUARIO_TABLE_NAME);
             sbSelect.append(" WHERE usuario_id = ?");
             stmtSelect = conn.prepareStatement(sbSelect.toString());
@@ -58,18 +58,18 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    public Collection buscaUsuarioPorNome(final String nome) {
+    public Collection buscaUsuarioPorNome(final String usuarioFirstName) {
         Connection conn = UsuarioUtil.getConnection();
         Collection result = null;
         ResultSet rs = null;
         PreparedStatement stmtSelect = null;
         try {
             StringBuilder sbSelect = new StringBuilder();
-            sbSelect.append("SELECT usuario_id, nome, sobrenome, email FROM ");
+            sbSelect.append("SELECT usuario_id, usuariofirstname, usuariolastname, usuarioemail FROM ");
             sbSelect.append(UsuarioConstantes.USUARIO_TABLE_NAME);
-            sbSelect.append(" WHERE nome = ?");
+            sbSelect.append(" WHERE usuariofirstname = ?");
             stmtSelect = conn.prepareStatement(sbSelect.toString());
-            stmtSelect.setString(1, nome);
+            stmtSelect.setString(1, usuarioFirstName);
             rs = stmtSelect.executeQuery();
             result = UsuarioUtil.makeUsuarioObjectsFromResultSet(rs);
         } catch (SQLException ex) {
@@ -110,9 +110,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario criaUsuario(
-            final String nome,
-            final String sobrenome,
-            final String email) {
+            final String usuarioFirstName,
+            final String usuarioLastName,
+            final String usuarioEmail) {
         Usuario result = null;
         PreparedStatement stmtInsert = null;
         Connection conn = UsuarioUtil.getConnection();
@@ -121,24 +121,24 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             StringBuilder sbInsert = new StringBuilder();
             sbInsert.append("INSERT INTO ");
             sbInsert.append(UsuarioConstantes.USUARIO_TABLE_NAME);
-            sbInsert.append(" ( usuario_id, nome, sobrenome, email ) ");
+            sbInsert.append(" ( usuario_id, usuariofirstname, usuariolastname, usuarioemail ) ");
             sbInsert.append(" VALUES (");
             sbInsert.append(" NEXT VALUE FOR ");
             sbInsert.append(UsuarioConstantes.USUARIO_ID_SEQUENCE_NAME);
             sbInsert.append(", ?, ?, ?) ");
             stmtInsert = conn.prepareStatement(sbInsert.toString());
-            stmtInsert.setString(1, nome);
-            stmtInsert.setString(2, sobrenome);
-            stmtInsert.setString(3, email);
+            stmtInsert.setString(1, usuarioFirstName);
+            stmtInsert.setString(2, usuarioLastName);
+            stmtInsert.setString(3, usuarioEmail);
             log.info("About to execute INSERT: values "
-                    + nome + ", " + sobrenome + ", " + email);
+                    + usuarioFirstName + ", " + usuarioLastName + ", " + usuarioEmail);
             int rows = stmtInsert.executeUpdate();
             if (rows != 1) {
                 throw new SQLException(
                         "executeUpdate return value: "
                         + rows);
             }
-            result = new Usuario(usuario_id, nome, sobrenome, email);
+            result = new Usuario(usuario_id, usuarioFirstName, usuarioLastName, usuarioEmail);
         } catch (SQLException ex) {
             log.error(ex);
             throw new DAORuntimeException(ex);
@@ -151,9 +151,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public void updateUsuario(final int id,
-            final String nome,
-            final String sobrenome,
-            final String email) throws UsuarioNaoEncontradoException {
+            final String usuarioFirstName,
+            final String usuarioLastName,
+            final String usuarioEmail) throws UsuarioNaoEncontradoException {
         Connection conn = UsuarioUtil.getConnection();
         PreparedStatement stmtUpdate = null;
         try {
@@ -161,14 +161,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             sbUpdate.append("UPDATE ");
             sbUpdate.append(UsuarioConstantes.USUARIO_TABLE_NAME);
             sbUpdate.append(" SET ");
-            sbUpdate.append(" nome = ?, ");
-            sbUpdate.append(" sobrenome = ? ");
-            sbUpdate.append(" email = ? ");
+            sbUpdate.append(" usuariofirstname = ?, ");
+            sbUpdate.append(" usuariolastname = ? ");
+            sbUpdate.append(" usuarioemail = ? ");
             sbUpdate.append(" WHERE usuario_id = ?");
             stmtUpdate = conn.prepareStatement(sbUpdate.toString());
-            stmtUpdate.setString(1, nome);
-            stmtUpdate.setString(2, sobrenome);
-            stmtUpdate.setString(3, email);
+            stmtUpdate.setString(1, usuarioFirstName);
+            stmtUpdate.setString(2, usuarioLastName);
+            stmtUpdate.setString(3, usuarioEmail);
             stmtUpdate.setInt(4, id);
             int rows = stmtUpdate.executeUpdate();
             if (rows != 1) {
@@ -201,7 +201,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         PreparedStatement stmtSelect = null;
         try {
             StringBuilder sbSelect = new StringBuilder();
-            sbSelect.append("SELECT usuario_id, nome, sobrenome, email FROM ");
+            sbSelect.append("SELECT usuario_id, usuariofirstname, usuariolastname, usuarioemail FROM ");
             sbSelect.append(UsuarioConstantes.USUARIO_TABLE_NAME);
             stmtSelect = conn.prepareStatement(sbSelect.toString());
             rs = stmtSelect.executeQuery();

@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : Jan 9, 2017, 10:44:33 AM
-    Author     : juliano.lopes
+    Author     : lopes.lopes
 --%>
 
 <%@page import="fuji.entities.Usuario"%>
@@ -26,6 +26,7 @@
             <tr>
                 <td><%=u.getUsuarioFirstName()%></td>
                 <td><%=u.getUsuarioLastName()%></td>
+                <td><%=u.getUsuarioEmail()%></td>
             </tr>
             <%}%>
         </table>
