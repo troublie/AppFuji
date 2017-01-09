@@ -29,7 +29,7 @@ public class UserListController extends AbstractController {
             Collection result = new ArrayList<>();
             UsuarioDAO usuarios = new UsuarioDAOImpl();
             result = (Collection) usuarios.buscaTodosUsuarios();
-            this.setReturnPage("/index.jsp");
+            this.setReturnPage("/listaUsuarios.jsp");
             this.getRequest().setAttribute("usuarios", result);
         } catch (Exception ex) {
             Logger.getLogger(UserListController.class.getName()).log(Level.SEVERE, null, ex);
