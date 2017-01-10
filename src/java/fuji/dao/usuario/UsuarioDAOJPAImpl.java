@@ -5,12 +5,19 @@
  */
 package fuji.dao.usuario;
 
+import com.sun.istack.internal.NotNull;
+import fuji.dao.exception.DAORuntimeException;
 import fuji.entities.Usuario;
 import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.apache.commons.logging.*;
 
 /**
@@ -40,9 +47,26 @@ public class UsuarioDAOJPAImpl implements UsuarioDAO {
         return u;
     }
 
-    @Override
-    public Collection buscaUsuarioPorNome(final String nome) {
+@Override
+    public Collection buscaUsuarioPorNome(@NotNull final String nome) {
         Collection result = null;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
+        EntityManager em = emf.createEntityManager();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
+        Root<Usuario> from = criteria.from(Usuario.class);
+        criteria.select(from);
+        criteria.where(builder.equal(from.get("usuarioFirstName"), nome));
+        TypedQuery<Usuario> typed = em.createQuery(criteria);
+        try {
+            result = typed.getResultList();
+        } catch (final NoResultException ex) {
+            log.error(ex);
+            throw new DAORuntimeException(ex);
+        }
+        em.clear();
+        em.close();
+        emf.close();
         return result;
     }
 
