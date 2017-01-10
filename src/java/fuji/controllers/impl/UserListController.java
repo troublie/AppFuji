@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import fuji.controllers.AbstractController;
 import fuji.dao.usuario.UsuarioDAO;
 import fuji.dao.usuario.UsuarioDAOImpl;
+import fuji.dao.usuario.UsuarioDAOJPAImpl;
 import fuji.entities.Usuario;
 import java.util.Collection;
 
@@ -27,7 +28,7 @@ public class UserListController extends AbstractController {
             //usuarios.add(new Usuario(1, "Juliano", "Lopes", "juliano@gmail.com"));
             //usuarios.add(new Usuario(2, "João", "Pedro", "joao@gmail.com"));
             Collection result = new ArrayList<>();
-            UsuarioDAO usuarios = new UsuarioDAOImpl();
+            UsuarioDAO usuarios = new UsuarioDAOJPAImpl();
             result = (Collection) usuarios.buscaTodosUsuarios();
             this.setReturnPage("/listaUsuarios.jsp");
             this.getRequest().setAttribute("usuarios", result);
