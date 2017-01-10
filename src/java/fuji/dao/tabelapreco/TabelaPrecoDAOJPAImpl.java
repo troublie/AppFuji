@@ -70,7 +70,7 @@ public class TabelaPrecoDAOJPAImpl implements TabelaPrecoDAO {
     }
 
     @Override
-    public Collection buscaTodasTabelaPreco() {
+    public Collection buscaTodasTabelasPreco() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
         Query q = em.createQuery("select t from TabelaPreco t");

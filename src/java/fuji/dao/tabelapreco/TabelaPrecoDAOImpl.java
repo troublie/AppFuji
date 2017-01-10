@@ -82,7 +82,8 @@ public class TabelaPrecoDAOImpl implements TabelaPrecoDAO {
         return result;
     }
 
-    public Collection buscaTodasTabelaPreco() {
+    @Override
+    public Collection buscaTodasTabelasPreco() {
         Connection conn = TabelaPrecoUtil.getConnection();
         Collection result = null;
         ResultSet rs = null;
@@ -177,6 +178,7 @@ public class TabelaPrecoDAOImpl implements TabelaPrecoDAO {
         return result;
     }
 
+    @Override
     public void updateTabelaPreco(int id, String nome, String duhn, String duhe,
             String duhe2, String ddu, String fshn, String fshe, String fshe2,
             String dfs) throws TabelaPrecoNaoEncontradoException {

@@ -18,7 +18,7 @@ public interface TabelaPrecoDAO {
 
     public Collection buscaTabelaPrecoPorNome(String nome);
 
-    public Collection buscaTodasTabelaPreco();
+    public Collection buscaTodasTabelasPreco();
 
     public void removeTabelaPreco(int id) throws TabelaPrecoNaoEncontradoException;
 
