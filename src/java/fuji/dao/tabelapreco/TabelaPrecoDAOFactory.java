@@ -15,6 +15,6 @@ public class TabelaPrecoDAOFactory {
     }
 
     public static TabelaPrecoDAO getTabelaPrecoDAO() {
-        return new TabelaPrecoDAOImpl();
+        return new TabelaPrecoDAOJPAImpl();
     }
 }

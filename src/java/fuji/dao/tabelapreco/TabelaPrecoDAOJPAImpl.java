@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fuji.dao.usuario;
+package fuji.dao.tabelapreco;
 
+import fuji.entities.TabelaPreco;
+import java.util.Collection;
 import com.sun.istack.internal.NotNull;
 import fuji.dao.exception.DAORuntimeException;
 import fuji.entities.Usuario;
@@ -24,40 +26,36 @@ import org.apache.commons.logging.*;
  *
  * @author juliano.lopes
  */
-public class UsuarioDAOJPAImpl implements UsuarioDAO {
+public class TabelaPrecoDAOJPAImpl implements TabelaPrecoDAO {
 
-    static final private Log log = LogFactory.getLog(UsuarioDAOJPAImpl.class);
+    static final private Log log = LogFactory.getLog(TabelaPrecoDAOJPAImpl.class);
     private boolean bIsClosed = false;
 
-    public UsuarioDAOJPAImpl() {
-    }
-
-    @Override
-    public Usuario buscaUsuarioPorId(final int id)
-            throws UsuarioNaoEncontradoException {
+    public TabelaPreco buscaTabelaPrecoPorId(final int id)
+            throws TabelaPrecoNaoEncontradoException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
-        Usuario u = em.find(Usuario.class, id);
-        if (u == null) {
-            throw new UsuarioNaoEncontradoException("usuario não encontrado");
+        TabelaPreco t = em.find(TabelaPreco.class, id);
+        if (t == null) {
+            throw new TabelaPrecoNaoEncontradoException("Tabela não encontrada");
         }
         em.clear();
         em.close();
         emf.close();
-        return u;
+        return t;
     }
 
     @Override
-    public Collection buscaUsuarioPorNome(@NotNull final String nome) {
+    public Collection buscaTabelaPrecoPorNome(String nome) {
         Collection result = null;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
-        Root<Usuario> from = criteria.from(Usuario.class);
+        CriteriaQuery<TabelaPreco> criteria = builder.createQuery(TabelaPreco.class);
+        Root<TabelaPreco> from = criteria.from(TabelaPreco.class);
         criteria.select(from);
-        criteria.where(builder.equal(from.get("usuarioFirstName"), nome));
-        TypedQuery<Usuario> typed = em.createQuery(criteria);
+        criteria.where(builder.equal(from.get("TabelaPrecoNome"), nome));
+        TypedQuery<TabelaPreco> typed = em.createQuery(criteria);
         try {
             result = typed.getResultList();
         } catch (final NoResultException ex) {
@@ -68,20 +66,34 @@ public class UsuarioDAOJPAImpl implements UsuarioDAO {
         em.close();
         emf.close();
         return result;
+
     }
 
     @Override
-    public void removeUsuario(final int id)
-            throws UsuarioNaoEncontradoException {
+    public Collection buscaTodasTabelaPreco() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
-        Usuario u = em.find(Usuario.class, id);
-        if (u == null) {
-            throw new UsuarioNaoEncontradoException("usuario não encontrado");
+        Query q = em.createQuery("select t from TabelaPreco t");
+        Collection result = null;
+        result = q.getResultList();
+        em.clear();
+        em.close();
+        emf.close();
+        return result;
+    }
+
+    @Override
+    public void removeTabelaPreco(int id)
+            throws TabelaPrecoNaoEncontradoException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
+        EntityManager em = emf.createEntityManager();
+        TabelaPreco t = em.find(TabelaPreco.class, id);
+        if (t == null) {
+            throw new TabelaPrecoNaoEncontradoException("Tabela não encontrada");
         }
         try {
             em.getTransaction().begin();
-            em.remove(u);
+            em.remove(t);
             em.flush();
             em.getTransaction().commit();
         } catch (final NoResultException ex) {
@@ -94,40 +106,49 @@ public class UsuarioDAOJPAImpl implements UsuarioDAO {
         }
     }
 
-    @Override
-    public Usuario criaUsuario(
-            final String nome,
-            final String sobrenome,
-            final String email) {
-        Usuario usuario = new Usuario();
+    public TabelaPreco criaTabelaPreco(String nome, String duhn, String duhe,
+            String duhe2, String ddu, String fshn,
+            String fshe, String fshe2, String dfs) {
+        TabelaPreco t = new TabelaPreco();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
-        usuario.setUsuarioFirstName(nome);
-        usuario.setUsuarioLastName(sobrenome);
-        usuario.setUsuarioEmail(email);
+        t.setNome(nome);
+        t.setDuhn(duhn);
+        t.setDuhe(duhe);
+        t.setDuhe2(duhe2);
+        t.setDdu(ddu);
+        t.setFshn(fshn);
+        t.setFshe(fshe);
+        t.setFshe2(fshe2);
+        t.setDfs(dfs);
         em.getTransaction().begin();
-        em.persist(usuario);
+        em.persist(t);
         em.flush();
         em.getTransaction().commit();
 
-        return usuario;
+        return t;
     }
 
-    @Override
-    public void updateUsuario(final int id,
-            final String usuarioFirstName,
-            final String usuarioLastName,
-            final String usuarioEmail) throws UsuarioNaoEncontradoException {
+    public void updateTabelaPreco(int id, String nome, String duhn, String duhe,
+            String duhe2, String ddu, String fshn,
+            String fshe, String fshe2, String dfs)
+            throws TabelaPrecoNaoEncontradoException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
         EntityManager em = emf.createEntityManager();
-        Usuario u = em.find(Usuario.class, id);
-        if (u == null) {
-            throw new UsuarioNaoEncontradoException("usuario não encontrado");
+        TabelaPreco t = em.find(TabelaPreco.class, id);
+        if (t == null) {
+            throw new TabelaPrecoNaoEncontradoException("Tabela não encontrada");
         }
         em.getTransaction().begin();
-        u.setUsuarioFirstName(usuarioFirstName);
-        u.setUsuarioLastName(usuarioLastName);
-        u.setUsuarioEmail(usuarioEmail);
+        t.setNome(nome);
+        t.setDuhn(duhn);
+        t.setDuhe(duhe);
+        t.setDuhe2(duhe2);
+        t.setDdu(ddu);
+        t.setFshn(fshn);
+        t.setFshe(fshe);
+        t.setFshe2(fshe2);
+        t.setDfs(dfs);
         em.flush();
         em.getTransaction().commit();
     }
@@ -143,16 +164,4 @@ public class UsuarioDAOJPAImpl implements UsuarioDAO {
         return bIsClosed;
     }
 
-    @Override
-    public Collection buscaTodosUsuarios() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("AppFujiPU");
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createQuery("select u from Usuario u");
-        Collection result = null;
-        result = q.getResultList();
-        em.clear();
-        em.close();
-        emf.close();
-        return result;
-    }
 }

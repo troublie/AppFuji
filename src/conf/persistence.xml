@@ -3,6 +3,7 @@
   <persistence-unit name="AppFujiPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>fuji.entities.Usuario</class>
+    <class>fuji.entities.TabelaPreco</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/serviceDB"/>
