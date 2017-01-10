@@ -5,16 +5,37 @@
  */
 package fuji.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 /**
  *
  * @author juliano.lopes
  */
+@Entity
+@Table(name = "Usuario")
 public class Usuario {
 
+    @Id
+    @Column(name = "usuario_id")
+    @SequenceGenerator(name = "usuarioGenerator", sequenceName = "usuario_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuarioGenerator")
     private int id;
+    @Column(name = "usuarioFirstName")
     private String usuarioFirstName;
+    @Column(name = "usuarioLastName")
     private String usuarioLastName;
+    @Column(name = "usuarioEmail")
     private String usuarioEmail;
+    
+    public Usuario(){
+        
+    }
 
     public Usuario(int id, String usuarioFirstName, String usuarioLastName, String usuarioEmail) {
         this.id = id;
